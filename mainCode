@@ -1,0 +1,33 @@
+// Open spreadsheet and target the VPN Logs sheet
+function extractToFromLabeledEmails() {
+  const spreadsheetId = "1CF0YGW9YuJvuhNAdvlE_vLEbW4rAVS1T4tMKtQ8xNec";
+  const sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("VPN Logs");
+
+// Set the label you're using to pull from Gmail
+  const sourceLabel = GmailApp.getUserLabelByName("Student VPN");
+// Create/grab label for processed messages
+  const processedLabelName = "Student VPN - Processed";
+  let processedLabel = GmailApp.getUserLabelByName(processedLabelName);
+  if (!processedLabel) {
+    processedLabel = GmailApp.createLabel(processedLabelName);
+  }
+
+// Pull all emails with the "Student VPN" label
+  const threads = sourceLabel.getThreads();
+
+// Loop through every message in threads
+  for (const thread of threads) {
+    const messages = thread.getMessages();
+// Extract "To" address
+    for (const msg of messages) {
+      if (!msg.isInChats() && !msg.isDraft()) {
+        const toAddress = msg.getTo();
+        sheet.appendRow([toAddress, new Date()]);
+      }
+    }
+// Mark thread as processed and then archive it
+    thread.addLabel(processedLabel);
+    thread.removeLabel(sourceLabel);
+    thread.moveToArchive();
+  }
+}
