@@ -1,0 +1,7 @@
+// Create a menu bar on the spreadsheet with a sword icon in order to make this script click-to-run and also have a sword
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('⚔️')
+    .addItem('⚡️Run script⚡️', 'extractToFromLabeledEmails')
+    .addToUi();
+}
