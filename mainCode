@@ -1,6 +1,6 @@
 // Open spreadsheet and target the VPN Logs sheet
 function extractToFromLabeledEmails() {
-  const spreadsheetId = "1CF0YGW9YuJvuhNAdvlE_vLEbW4rAVS1T4tMKtQ8xNec";
+  const spreadsheetId = "enter-spreadsheet-id-here";
   const sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("VPN Logs");
 
 // Set the label you're using to pull from Gmail
